@@ -17,4 +17,8 @@ export class ComprasService {
   addCompra(compra: Compra) {
     return addDoc(this.compraCollection, compra);
   }
+
+  getCompras(): Observable<Compra[]>{
+    return collectionData(this.compraCollection, {idField: 'id'}) as Observable<Compra[]>;
+  }
 }

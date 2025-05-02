@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import {
   IonButton, IonTextarea, IonInput, IonDatetime, IonLabel, IonList, IonCardContent, IonCardTitle, IonItem,
-  IonCardHeader, IonCard, IonHeader, IonToolbar, IonTitle, IonContent
+  IonCardHeader, IonCard, IonHeader, IonToolbar, IonTitle, IonContent, ToastController
 } from '@ionic/angular/standalone';
 
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
@@ -20,7 +20,7 @@ import { ComprasService } from '../services/compras.service';
 export class Tab1Page implements OnInit {
   formCompra!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private compraService: ComprasService) { }
+  constructor(private formBuilder: FormBuilder, private compraService: ComprasService, private toastController: ToastController) { }
 
   ngOnInit(): void {
     this.createForm(new Compra());
@@ -30,23 +30,32 @@ export class Tab1Page implements OnInit {
     this.formCompra = this.formBuilder.group({
       nome: [compra.nome],
       categoria: [compra.categoria],
-      dataDaCompra: [compra.dataDaCompra],
+      dataDaCompra: [compra.dataDaCompra.toISOString().substring(0,10)],
       observacao: [compra.observacao],
       valor: [compra.valor]
     })
   }
 
+  async presentToast(message: string, color: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'bottom',
+      color: color,
+    });
+    await toast.present();
+  }
+
   onSubmit() {
-    console.log(this.formCompra.value);
     if (this.formCompra.valid) {
       const novaCompra: Compra = this.formCompra.value;
       this.compraService.addCompra(novaCompra)
         .then(() => {
-          console.log('Compra salva com sucesso!');
+          this.presentToast('Compra salva com sucesso!', 'success');
           this.formCompra.reset();
         })
-        .catch((err) => {
-          console.error('Erro ao salvar compra:', err);
+        .catch(() => {
+          this.presentToast('Erro ao salvar compra.', 'danger');
         });
     }
   }
