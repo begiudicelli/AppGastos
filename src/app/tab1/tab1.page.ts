@@ -1,20 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
-import {
-  IonButton, IonTextarea, IonInput, IonDatetime, IonLabel, IonList, IonCardContent, IonCardTitle, IonItem,
-  IonCardHeader, IonCard, IonHeader, IonToolbar, IonTitle, IonContent, ToastController
-} from '@ionic/angular/standalone';
+import { Component, OnInit } from '@angular/core';
+import { IonicModule, ToastController} from '@ionic/angular';
 
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 
 import { Compra } from '../compras/compra';
 import { ComprasService } from '../services/compras.service';
 
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
-  imports: [IonButton, IonTextarea, IonDatetime, IonInput, IonLabel, IonList, IonCardContent,
-    IonCardTitle, IonCard, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonCardHeader, ReactiveFormsModule],
+  imports: [IonicModule,  ReactiveFormsModule],
 })
 
 export class Tab1Page implements OnInit {
@@ -28,7 +25,6 @@ export class Tab1Page implements OnInit {
 
   createForm(compra: Compra){
     this.formCompra = this.formBuilder.group({
-      nome: [compra.nome],
       categoria: [compra.categoria],
       dataDaCompra: [compra.dataDaCompra.toISOString().substring(0,10)],
       observacao: [compra.observacao],

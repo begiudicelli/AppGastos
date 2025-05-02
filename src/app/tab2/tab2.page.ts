@@ -5,6 +5,9 @@ import { IonicModule } from '@ionic/angular';
 import { Compra } from '../compras/compra';
 import { ComprasService } from '../services/compras.service';
 
+import { addIcons } from 'ionicons';
+import { cartOutline } from 'ionicons/icons';
+
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -14,7 +17,9 @@ import { ComprasService } from '../services/compras.service';
 export class Tab2Page implements OnInit{
   compras: Compra[] = [];
 
-  constructor(private compraService: ComprasService) {}
+  constructor(private compraService: ComprasService) {
+    addIcons({cartOutline})
+  }
 
   ngOnInit(): void {
       this.carregarCompras();
@@ -36,4 +41,5 @@ export class Tab2Page implements OnInit{
       }
     });
   }
+
 }

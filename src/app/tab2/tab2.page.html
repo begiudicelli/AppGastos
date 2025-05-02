@@ -11,22 +11,52 @@
 
   <ng-container *ngIf="compras.length > 0; else nenhumaCompra">
     <ion-card *ngFor="let compra of compras">
-      <ion-card-header>
-        <ion-card-title>{{ compra.nome }}</ion-card-title>
-        <ion-chip color="primary" slot="end">{{ compra.categoria }}</ion-chip>
-      </ion-card-header>
-
       <ion-card-content>
-        <p><strong>Data:</strong> {{ compra.dataDaCompra | date:'shortDate'}}</p>
-        <p><strong>Valor:</strong> R$ {{ compra.valor | number:'1.2-2' }}</p>
-        <p *ngIf="compra.observacao"><strong>Obs:</strong> {{ compra.observacao }}</p>
+        <ion-item lines="none">
+          <ion-label>
+            <strong>Categoria:</strong>
+            <ion-chip>
+              {{ compra.categoria }}
+            </ion-chip>
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label>
+            <strong>Data:</strong>
+            <ion-text color="medium">
+              {{ compra.dataDaCompra | date: 'shortDate' }}
+            </ion-text>
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label>
+            <strong>Valor:</strong>
+            <ion-text [color]="compra.valor > 60 ? 'danger' : ''">
+              R$ {{ compra.valor | number:'1.2-2' }}
+            </ion-text>
+          </ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="compra.observacao" lines="none">
+          <ion-label>
+            <strong>Obs:</strong>
+            <ion-text color="medium">
+              {{ compra.observacao }}
+            </ion-text>
+          </ion-label>
+        </ion-item>
       </ion-card-content>
     </ion-card>
   </ng-container>
 
   <ng-template #nenhumaCompra>
-    <ion-text color="medium">
-      <p style="text-align: center; margin-top: 2rem;">Nenhuma compra registrada.</p>
-    </ion-text>
+    <div class="ion-text-center" style="margin-top: 2rem;">
+      <ion-icon name="cart-outline" size="large" color="medium"></ion-icon>
+      <ion-text color="medium">
+        <h2>Nenhuma compra registrada</h2>
+      </ion-text>
+    </div>
   </ng-template>
 </ion-content>
