@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Cadastro de compras
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,5 +13,44 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <form [formGroup]="formCompra" (ngSubmit)="onSubmit()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Nova Despesa</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label position="floating">Nome</ion-label>
+            <ion-input type="text" formControlName="nome"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Categoria</ion-label>
+            <ion-input type="text" formControlName="categoria"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Data da Compra</ion-label>
+            <ion-datetime presentation="date" formControlName="dataDaCompra"></ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Valor (R$)</ion-label>
+            <ion-input type="number" min="0.01" step="0.01" formControlName="valor"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Observação</ion-label>
+            <ion-textarea autoGrow="true" formControlName="observacao"></ion-textarea>
+          </ion-item>
+        </ion-list>
+
+        <ion-button expand="block" color="primary" type="submit">
+          Salvar Despesa
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </form>
 </ion-content>
